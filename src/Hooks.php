@@ -114,6 +114,126 @@ class Hooks
 		}
 	}
 
+	public function loadArticleDca($dc)
+	{
+		$layout  = null;
+		$article = \ArticleModel::findByPk($dc->id);
+		$page    = \PageModel::findWithDetails($article->pid);
+
+		while (!$layout && $page) {
+			if ($page->includeLayout) {
+				$layout = \LayoutModel::findByPk($page->layout);
+			}
+			else {
+				$page = \PageModel::findWithDetails($page->pid);
+			}
+		}
+
+		if ($layout && $layout->useRevealJs) {
+			\MetaPalettes::appendFields(
+				'tl_article',
+				'default',
+				'template',
+				array(
+					'revealVerticalSlide'
+				)
+			);
+		}
+	}
+
+	public function getArticleLabel($row, $label)
+	{
+		$callback = $GLOBALS['TL_DCA']['tl_article']['list']['label']['reveal_original_label_callback'];
+		if (is_array($callback)) {
+			$callback[0] = \System::importStatic($callback[0]);
+		}
+		$label = call_user_func($callback, $row, $label);
+
+		if ($row['revealVerticalSlide'] == 'start') {
+			$label = '&boxhd; ' . $label;
+		}
+		else if ($row['revealVerticalSlide'] == 'stop') {
+			$label = '&boxhu; ' . $label;
+		}
+		else {
+			$predecessors = \ArticleModel::findBy(
+				array('pid = ?', 'sorting < ?', 'revealVerticalSlide != ?'),
+				array($row['pid'], $row['sorting'], ''),
+				array('order' => 'sorting DESC', 'limit' => 1)
+			);
+
+			if ($predecessors && $predecessors->revealVerticalSlide == 'start') {
+				$successor = \ArticleModel::findOneBy(
+					array('pid = ?', 'sorting > ?'),
+					array($row['pid'], $row['sorting']),
+					array('order' => 'sorting', 'limit' => 1)
+				);
+
+				if ($successor && $successor->revealVerticalSlide == 'start') {
+					$label = '&boxhu; ' . $label;
+				}
+				else {
+					$label = '&boxv; ' . $label;
+				}
+			}
+		}
+
+		$predecessors = \ArticleModel::findBy(
+			array('pid = ?', 'sorting < ?'),
+			array($row['pid'], $row['sorting']),
+			array('order' => 'sorting')
+		);
+
+		if ($predecessors) {
+			$slide = $predecessors->count();
+			$page  = -1;
+
+			$inVertical = false;
+			foreach ($predecessors as $predecessor) {
+				if ($predecessor->revealVerticalSlide == 'start') {
+					$inVertical = true;
+				}
+
+				if ($inVertical && $predecessor->revealVerticalSlide != 'start') {
+					$page += .001;
+				}
+				else {
+					$page = (int) ($page + 1);
+				}
+
+				if ($predecessor->revealVerticalSlide == 'stop') {
+					$inVertical = false;
+				}
+			}
+
+			if ($inVertical && $row['revealVerticalSlide'] != 'start') {
+				$page += .001;
+			}
+			else {
+				$page = (int) ($page + 1);
+			}
+
+			if ($inVertical) {
+				$pageMain = (int) $page;
+				$pageSub  = (int) (($page - $pageMain) * 1000);
+
+				$page = sprintf('%d-%d', $pageMain, $pageSub);
+			}
+			else {
+				$page = (int) $page;
+			}
+
+		}
+		else {
+			$slide = 0;
+			$page  = 0;
+		}
+
+		$label .= ' ' . sprintf($GLOBALS['TL_LANG']['tl_article']['revealSlideNumber'], $slide, $page);
+
+		return $label;
+	}
+
 	public function getPageLayout(\PageModel $page, \LayoutModel $layout, \PageRegular $pageRegular)
 	{
 		if ($layout->useRevealJs) {

@@ -50,6 +50,9 @@
 <div class="reveal">
 	<div class="slides">
 		<?php echo $this->main; ?>
+		<?php if (isset($GLOBALS['REVEAL_VERTICAL_SLIDE']) && $GLOBALS['REVEAL_VERTICAL_SLIDE']): ?>
+		</section>
+		<?php endif; ?>
 	</div>
 </div>
 <?php $this->endblock(); ?>
