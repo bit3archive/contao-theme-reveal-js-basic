@@ -20,6 +20,16 @@ $GLOBALS['TL_DCA']['tl_layout']['fields']['useRevealJs'] = array(
 	'sql'       => "char(1) NOT NULL default ''"
 );
 
+$GLOBALS['TL_DCA']['tl_layout']['fields']['revealJsPrint'] = array(
+	'label'     => &$GLOBALS['TL_LANG']['tl_layout']['revealJsPrint'],
+	'default'   => '',
+	'exclude'   => true,
+	'inputType' => 'select',
+	'options'   => array('pdf', 'paper'),
+	'eval'      => array('includeBlankOption' => true),
+	'sql'       => "char(5) NOT NULL default ''"
+);
+
 $GLOBALS['TL_DCA']['tl_layout']['fields']['revealJsTheme'] = array(
 	'label'     => &$GLOBALS['TL_LANG']['tl_layout']['revealJsTheme'],
 	'default'   => 'default',

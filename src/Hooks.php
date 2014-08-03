@@ -131,6 +131,19 @@ class Hooks
 				array_unshift($GLOBALS['TL_CSS'], $cssPath . 'theme/' . $layout->revealJsTheme . '.css');
 			}
 
+			if ($layout->revealJsPrint == 'pdf') {
+				array_unshift(
+					$GLOBALS['TL_CSS'],
+					$cssPath . 'print/pdf.css'
+				);
+			}
+			else if ($layout->revealJsPrint == 'paper') {
+				array_unshift(
+					$GLOBALS['TL_CSS'],
+					$cssPath . 'print/paper.css'
+				);
+			}
+
 			array_unshift(
 				$GLOBALS['TL_CSS'],
 				$cssPath . 'reveal' . ($GLOBALS['TL_CONFIG']['revealJsUseMinified'] ? '.min' : '') . '.css'
