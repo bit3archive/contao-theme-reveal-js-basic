@@ -199,6 +199,14 @@ class Hooks
 Reveal.initialize({$options});
 </script>
 EOF;
+			$GLOBALS['TL_HOOKS']['parseTemplate'][] = array('Bit3\Contao\Theme\RevealJs\Basic\Hooks', 'parseTemplate');
+		}
+	}
+
+	public function parseTemplate(\Template $template)
+	{
+		if (substr($template->getName(), 0, 3) == 'ce_' && $template->imgSize) {
+			$template->imgSize = '';
 		}
 	}
 }
