@@ -4,7 +4,7 @@ namespace Bit3\Contao\Theme\RevealJs\Basic;
 
 class Hooks
 {
-	public function loadLayout($dc)
+	public function loadLayoutDca($dc)
 	{
 		$layout = \Database::getInstance()
 			->prepare('SELECT * FROM tl_layout WHERE id=?')
@@ -12,6 +12,62 @@ class Hooks
 
 		if ($layout->useRevealJs) {
 			Loader::load();
+
+			// {title_legend},name;
+			// {header_legend},rows;
+			// {column_legend},cols;
+			// {sections_legend:hide},sections,sPosition;
+			// {webfonts_legend:hide},webfonts;
+			// {style_legend},framework,stylesheet,external;
+			// {feed_legend:hide},newsfeeds,calendarfeeds;
+			// {modules_legend},modules;
+			// {expert_legend:hide},template,doctype,viewport,titleTag,cssClass,onload,head;
+			// {jquery_legend},addJQuery;
+			// {mootools_legend},addMooTools;
+			// {script_legend:hide},analytics,script;
+			// {static_legend},static'
+
+			\MetaPalettes::appendBefore(
+				'tl_layout',
+				'default',
+				'expert',
+				array(
+					'revealJs' => array(
+						'revealJsPrint',
+						'revealJsTheme',
+						'revealJsSize',
+						'revealJsMargin',
+						'revealJsScale',
+						'revealJsControls',
+						'revealJsProgress',
+						'revealJsSlideNumber',
+						'revealJsHistory',
+						'revealJsKeyboard',
+						'revealJsOverview',
+						'revealJsCenter',
+						'revealJsTouch',
+						'revealJsLoop',
+						'revealJsRtl',
+						'revealJsFragments',
+						'revealJsEmbedded',
+						'revealJsAutoSlide',
+						'revealJsAutoSlideStoppable',
+						'revealJsMouseWheel',
+						'revealJsHideAddressBar',
+						'revealJsPreviewLinks',
+						'revealJsTransition',
+						'revealJsTransitionSpeed',
+						'revealJsBackgroundTransition',
+						'revealJsViewDistance'
+					)
+				)
+			);
+
+			\MetaPalettes::removeFields(
+				'tl_layout',
+				'default',
+				array('sections', 'sPosition', 'static')
+			);
 		}
 	}
 

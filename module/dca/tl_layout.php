@@ -2,7 +2,7 @@
 
 $GLOBALS['TL_DCA']['tl_layout']['config']['onload_callback'][] = array(
 	'Bit3\Contao\Theme\RevealJs\Basic\Hooks',
-	'loadLayout'
+	'loadLayoutDca'
 );
 
 $GLOBALS['TL_DCA']['tl_layout']['config']['onsubmit_callback'][] = array(
@@ -10,47 +10,7 @@ $GLOBALS['TL_DCA']['tl_layout']['config']['onsubmit_callback'][] = array(
 	'saveLayout'
 );
 
-$GLOBALS['TL_DCA']['tl_layout']['palettes']['__selector__'][] = 'useRevealJs';
-
 MetaPalettes::appendFields('tl_layout', 'default', 'title', array('useRevealJs'));
-
-$GLOBALS['TL_DCA']['tl_layout']['metapalettes']['useRevealJs'] = array(
-	'title'    => array('name', 'useRevealJs'),
-	'header'   => array('rows'),
-	'column'   => array('cols'),
-	'webfonts' => array('webfonts'),
-	'style'    => array('stylesheet', 'external'),
-	'revealJs' => array(
-		'revealJsTheme',
-		'revealJsSize',
-		'revealJsMargin',
-		'revealJsScale',
-		'revealJsControls',
-		'revealJsProgress',
-		'revealJsSlideNumber',
-		'revealJsHistory',
-		'revealJsKeyboard',
-		'revealJsOverview',
-		'revealJsCenter',
-		'revealJsTouch',
-		'revealJsLoop',
-		'revealJsRtl',
-		'revealJsFragments',
-		'revealJsEmbedded',
-		'revealJsAutoSlide',
-		'revealJsAutoSlideStoppable',
-		'revealJsMouseWheel',
-		'revealJsHideAddressBar',
-		'revealJsPreviewLinks',
-		'revealJsTransition',
-		'revealJsTransitionSpeed',
-		'revealJsBackgroundTransition',
-		'revealJsViewDistance'
-	),
-	'modules'  => array('modules'),
-	'expert'   => array('template', 'doctype', 'viewport', 'titleTag', 'cssClass', 'onload', 'head'),
-	'script'   => array('analytics', 'script'),
-);
 
 $GLOBALS['TL_DCA']['tl_layout']['fields']['useRevealJs'] = array(
 	'label'     => &$GLOBALS['TL_LANG']['tl_layout']['useRevealJs'],
