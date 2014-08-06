@@ -16,7 +16,7 @@
 		"php": ">=5.3.4",
 		"contao/core": "~3.3",
 		"contao-community-alliance/composer-plugin": "~2.0",
-		"bit3/contao-meta-palettes": "~1.1"
+		"bit3/contao-meta-palettes": "~1.8"
 	},
 	"autoload": {
 		"psr-4": {
