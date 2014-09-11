@@ -1,16 +1,16 @@
 <?php
 if (!isset($GLOBALS['REVEAL_VERTICAL_SLIDE'])) {
-	$GLOBALS['REVEAL_VERTICAL_SLIDE'] = false;
+    $GLOBALS['REVEAL_VERTICAL_SLIDE'] = false;
 }
 
 if ($this->revealVerticalSlide == 'start') {
-	if ($GLOBALS['REVEAL_VERTICAL_SLIDE']) {
-		?></section><?php
-	}
+    if ($GLOBALS['REVEAL_VERTICAL_SLIDE']) {
+        ?></section><?php
+    }
 
-	?><section><?php
+    ?><section><?php
 
-	$GLOBALS['REVEAL_VERTICAL_SLIDE'] = true;
+    $GLOBALS['REVEAL_VERTICAL_SLIDE'] = true;
 }
 ?>
 <section class="<?php echo $this->class; ?> block"<?php echo $this->cssID; ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
@@ -54,8 +54,8 @@ if ($this->revealVerticalSlide == 'start') {
 </section>
 <?php
 if ($this->revealVerticalSlide == 'stop' && $GLOBALS['REVEAL_VERTICAL_SLIDE']) {
-	?></section><?php
+    ?></section><?php
 
-	$GLOBALS['REVEAL_VERTICAL_SLIDE'] = false;
+    $GLOBALS['REVEAL_VERTICAL_SLIDE'] = false;
 }
 ?>
